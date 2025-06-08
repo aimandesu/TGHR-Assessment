@@ -1,0 +1,6 @@
+@tg.api_HostAddress = http://localhost:5034
+
+GET {{tg.api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
