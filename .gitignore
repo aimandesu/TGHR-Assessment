@@ -35,11 +35,6 @@ logs/
 .env
 .env.*
 
-## docker
-docker-compose.override.yml
-**/Dockerfile
-**/docker-compose.yml
-**/docker-compose.*.yml
 
 ## Publish outputs
 publish/
