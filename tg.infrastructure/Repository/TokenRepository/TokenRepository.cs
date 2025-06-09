@@ -16,7 +16,7 @@ namespace tg.infrastructure.Repository.TokenRepository
 
     public class TokenRepository : ITokenRepository
     {
-        private readonly ApplicationDbContext _context;
+
         private readonly IConfiguration _configuration;
         private readonly SymmetricSecurityKey _key;
         public TokenRepository(
@@ -24,17 +24,16 @@ namespace tg.infrastructure.Repository.TokenRepository
             IConfiguration configuration
         )
         {
-            _context = context;
             _configuration = configuration;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"]));
         }
 
-        public string CreateToken(UserModel user)
+        public string CreateToken(string email, string username)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Email, email),
+                new Claim(JwtRegisteredClaimNames.GivenName, username),
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

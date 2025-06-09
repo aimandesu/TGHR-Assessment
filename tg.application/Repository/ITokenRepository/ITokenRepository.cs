@@ -8,6 +8,6 @@ namespace tg.application.Repository.ITokenRepository
 {
     public interface ITokenRepository
     {
-        string CreateToken(UserModel user);
+        string CreateToken(string email, string username);
     }
 }

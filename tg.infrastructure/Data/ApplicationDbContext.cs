@@ -19,5 +19,10 @@ namespace tg.infrastructure.Data
         public DbSet<SkillModel> Skills { get; set; }
         public DbSet<HobbyModel> Hobbies { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
     }
 }
