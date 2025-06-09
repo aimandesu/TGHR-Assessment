@@ -4,12 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using tg.infrastructure;
 using tg.application;
 using tg.infrastructure.Data;
+using tg.api.Extensions;
 // using tg.infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureApplication();
+builder.Services.ConfigureJWTPolicy(builder.Configuration);
+builder.Services.ConfigureIdentityPolicy();
 
 
 builder.Services.AddControllers()
@@ -29,5 +32,7 @@ var dataContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>(
 dataContext?.Database.EnsureCreated();
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();

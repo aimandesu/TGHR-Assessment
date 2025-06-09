@@ -30,7 +30,7 @@ namespace tg.application.Features.Skill.Create
         public async Task<CreateSkillResponse> Handle(CreateSkillRequest request, CancellationToken cancellationToken)
         {
             var skill = _mapper.Map<SkillModel>(request); //this is what config uses for createskillmapper
-            _skillRepository.Create(skill);
+            await _skillRepository.Create(skill);
             await _unitOfWork.Save(cancellationToken);
 
             return _mapper.Map<CreateSkillResponse>(skill);

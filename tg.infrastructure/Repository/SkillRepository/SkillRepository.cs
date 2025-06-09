@@ -20,14 +20,14 @@ namespace tg.infrastructure.Repository.SkillRepository
             _context = context;
         }
 
-        public void Create(SkillModel skill)
+        public async Task Create(SkillModel skill)
         {
-            _context.Skill.Add(skill);
+            await _context.Skills.AddAsync(skill);
         }
 
         public async Task<List<SkillModel>> GetSkills()
         {
-            return await _context.Skill.ToListAsync();
+            return await _context.Skills.ToListAsync();
         }
     }
 }

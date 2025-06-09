@@ -23,7 +23,7 @@ services:
       - sqlserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=innocel_asessment;User Id=sa;Password=DockerSQL2022_;TrustServerCertificate=true;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=tg_asessment;User Id=sa;Password=DockerSQL2022_;TrustServerCertificate=true;
     networks:
       - app-network
 
