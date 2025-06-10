@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace tg.application.Features.User.Search.Freelancer
+namespace tg.application.Features.User.Search
 {
     public sealed class GetFreelancerValidator : AbstractValidator<GetFreelancerRequest>
     {

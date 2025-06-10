@@ -6,7 +6,7 @@ using AutoMapper;
 using tg.application.Dtos;
 using tg.domain.Entities;
 
-namespace tg.application.Features.User.Search.Freelancer
+namespace tg.application.Features.User.Search
 {
     public sealed class GetFreelancerMapper : Profile
     {

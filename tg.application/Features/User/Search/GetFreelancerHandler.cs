@@ -7,7 +7,7 @@ using MediatR;
 using tg.application.Repository.IUserRepository;
 using tg.application.Dtos;
 
-namespace tg.application.Features.User.Search.Freelancer
+namespace tg.application.Features.User.Search
 {
     public sealed class GetFreelancerHandler : IRequestHandler<GetFreelancerRequest, GetFreelancerResponse>
     {

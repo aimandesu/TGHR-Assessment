@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using tg.application.Dtos;
 using tg.domain.Entities;
 
-namespace tg.application.Features.User.Search.Freelancer
+namespace tg.application.Features.User.Search
 {
     public sealed record GetFreelancerResponse
     {

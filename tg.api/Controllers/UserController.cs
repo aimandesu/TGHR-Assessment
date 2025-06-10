@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using tg.application.Common;
 using tg.application.Features.User;
 using tg.application.Features.User.Login;
-using tg.application.Features.User.Search.Freelancer;
+using tg.application.Features.User.Search;
 using tg.application.Features.User.SignUp;
 using tg.application.Repository.ITokenRepository;
 using tg.domain.Entities;

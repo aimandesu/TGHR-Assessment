@@ -21,7 +21,7 @@ namespace tg.application.Features.User.Login
         private readonly IMapper _mapper;
 
         public LoginUserHandler(
-IUnitOfWork unitOfWork,
+            IUnitOfWork unitOfWork,
             IUserRepository userRepository,
             IMapper mapper
         )
