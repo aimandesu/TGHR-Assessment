@@ -28,10 +28,11 @@ namespace tg.infrastructure.Repository.TokenRepository
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"]));
         }
 
-        public string CreateToken(string email, string username)
+        public string CreateToken(string email, string username, string userId)
         {
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim(JwtRegisteredClaimNames.Email, email),
                 new Claim(JwtRegisteredClaimNames.GivenName, username),
             };

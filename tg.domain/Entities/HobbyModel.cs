@@ -13,5 +13,7 @@ namespace tg.domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string HobbyName { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
+        public UserModel? User { get; set; }
     }
 }

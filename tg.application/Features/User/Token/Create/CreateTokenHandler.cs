@@ -25,7 +25,7 @@ namespace tg.application.Features.User.Token.Create
 
         public async Task<CreateTokenResponse> Handle(CreateTokenRequest request, CancellationToken cancellationToken)
         {
-            var token = _tokenRepository.CreateToken(request.User.Email, request.User.UserName);
+            var token = _tokenRepository.CreateToken(request.User.Email, request.User.UserName, request.User.Id);
             await _unitOfWork.Save(cancellationToken);
 
             return new CreateTokenResponse { Token = token };

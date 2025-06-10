@@ -30,6 +30,7 @@ namespace tg.api.Controllers
             return Ok(response);
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         public async Task<ActionResult<CreateSkillResponse>> Create(CreateSkillRequest request, CancellationToken cancellationToken)
         {

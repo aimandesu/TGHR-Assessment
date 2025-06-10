@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using tg.domain.Dtos;
 using tg.domain.Entities;
 
 namespace tg.application.Features.User.SignUp
@@ -12,7 +13,8 @@ namespace tg.application.Features.User.SignUp
         public SignUpUserMapper()
         {
             CreateMap<SignUpUserRequest, UserModel>();
-            CreateMap<UserModel, SignUpUserResponse>();
+            CreateMap<UserModel, SignUpUserResponse>(); //SignUpUserDto
+            // CreateMap<UserModelDto, SignUpUserResponse>();
         }
     }
 }

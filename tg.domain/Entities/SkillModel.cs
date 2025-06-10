@@ -16,6 +16,9 @@ namespace tg.domain.Entities
         public Guid Id { get; set; }
         public string SkillName { get; set; } = string.Empty;
         public Proficiency ProficiencyLevel { get; set; } = Proficiency.Beginner;
+        public string UserId { get; set; } = string.Empty;
+
+        public UserModel? User { get; set; }
 
     }
 }

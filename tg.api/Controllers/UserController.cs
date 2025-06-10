@@ -6,8 +6,10 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using tg.application.Common;
 using tg.application.Features.User;
+using tg.application.Features.User.Search.Freelancer;
 using tg.application.Features.User.SignUp;
 using tg.application.Repository.ITokenRepository;
+using tg.domain.Entities;
 
 namespace tg.api.Controllers
 {
@@ -38,7 +40,7 @@ namespace tg.api.Controllers
             if (!result.Result.IsSuccess)
                 return BadRequest(result);
 
-            var token = _tokenRepository.CreateToken(request.Email, request.Username);
+            var token = _tokenRepository.CreateToken(request.Email, request.Username, result.Result.SuccessData.UserModel.Id);
 
             HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
             {
@@ -49,6 +51,16 @@ namespace tg.api.Controllers
             });
 
             return Ok(result);
+        }
+
+        [HttpPost("freelancer/search")]
+        public async Task<ActionResult<UserModel?>> SearchFreelancer(
+            GetFreelancerRequest request,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await _mediator.Send(new GetFreelancerRequest(request.Email, request.Username), cancellationToken);
+            return Ok(response);
         }
 
     }

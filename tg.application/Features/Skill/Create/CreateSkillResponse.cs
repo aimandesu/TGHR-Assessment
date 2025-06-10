@@ -9,6 +9,7 @@ namespace tg.application.Features.Skill.Create
     //this is dto somehow
     public sealed record class CreateSkillResponse
     {
+        public string UserId { get; set; } = string.Empty;
         public string SkillName { get; set; } = string.Empty;
         public Proficiency ProficiencyLevel { get; set; } = Proficiency.Beginner;
     }

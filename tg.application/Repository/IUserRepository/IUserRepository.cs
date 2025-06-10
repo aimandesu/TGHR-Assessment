@@ -12,5 +12,8 @@ namespace tg.application.Repository.IUserRepository
     {
         Task<Result<UserSuccess, UserFailure>> SignUp(UserModel user, string password);
         Task LoginUser(UserModel user);
+
+        Task<UserModel?> SearchFreelancer(string email, string username);
+
     }
 }
