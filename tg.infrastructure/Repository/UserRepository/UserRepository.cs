@@ -68,6 +68,13 @@ namespace tg.infrastructure.Repository.UserRepository
             return Result<UserModel, UserFailure>.Success(user);
         }
 
+        public async Task<List<UserModel>> SearchAllFreelancer()
+        {
+            var userModels = await _context.Users.ToListAsync();
+            _logger.LogInformation(userModels.ToString());
+
+            return userModels;
+        }
 
         public async Task<UserModel?> SearchFreelancer(string email, string username)
         {

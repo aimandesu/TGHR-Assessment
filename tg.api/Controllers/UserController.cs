@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using tg.application.Common;
 using tg.application.Features.User;
+using tg.application.Features.User.Get;
 using tg.application.Features.User.Login;
 using tg.application.Features.User.Search;
 using tg.application.Features.User.SignUp;
@@ -94,6 +95,19 @@ namespace tg.api.Controllers
         {
             var response = await _mediator.Send(
                 new GetFreelancerRequest(request.Email, request.Username),
+                cancellationToken
+            );
+
+            return Ok(response);
+        }
+
+        [HttpGet("freelancer/getall")]
+        public async Task<ActionResult<List<GetAllFreelancerResponse>>> GetAllFreelancer(
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await _mediator.Send(
+                new GetAllFreelancerRequest(),
                 cancellationToken
             );
 

@@ -13,8 +13,8 @@ namespace tg.application.Repository.IUserRepository
     {
         Task<Result<UserModel, UserFailure>> SignUp(UserModel user, string password);
         Task<Result<UserModel, UserFailure>> LoginUser(string username, string password);
-
         Task<UserModel?> SearchFreelancer(string email, string username);
+        Task<List<UserModel>> SearchAllFreelancer();
 
     }
 }
