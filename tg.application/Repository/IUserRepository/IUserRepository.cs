@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using tg.application.Common;
 using tg.application.Features.User;
+using tg.domain.Dtos;
 using tg.domain.Entities;
 
 namespace tg.application.Repository.IUserRepository
@@ -13,7 +14,7 @@ namespace tg.application.Repository.IUserRepository
         Task<Result<UserSuccess, UserFailure>> SignUp(UserModel user, string password);
         Task LoginUser(UserModel user);
 
-        Task<UserModel?> SearchFreelancer(string email, string username);
+        Task<UserModelDto?> SearchFreelancer(string email, string username);
 
     }
 }

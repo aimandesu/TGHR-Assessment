@@ -10,6 +10,7 @@ using tg.application.Common;
 using tg.application.Features.User;
 using tg.application.Repository.ITokenRepository;
 using tg.application.Repository.IUserRepository;
+using tg.domain.Dtos;
 using tg.domain.Entities;
 using tg.infrastructure.Data;
 
@@ -42,11 +43,20 @@ namespace tg.infrastructure.Repository.UserRepository
             throw new NotImplementedException();
         }
 
-        public async Task<UserModel?> SearchFreelancer(string email, string username)
+        public async Task<UserModelDto?> SearchFreelancer(string email, string username)
         {
             _logger.LogInformation(username);
             _logger.LogInformation(email);
-            return await _context.Users.FirstOrDefaultAsync(e => e.Email == email && e.UserName == username);
+            UserModel? user = await _context.Users.FirstOrDefaultAsync(e => e.Email == email && e.UserName == username);
+            var dto = new UserModelDto
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                Username = user.UserName
+            };
+
+            return dto;
+
         }
 
         public async Task<Result<UserSuccess, UserFailure>> SignUp(UserModel user, string password)
@@ -63,10 +73,18 @@ namespace tg.infrastructure.Repository.UserRepository
                 return Result<UserSuccess, UserFailure>.Fail(failDto);
             }
 
+            var dto = new UserModelDto
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                Username = user.UserName
+            };
+
+
             var successDto = new UserSuccess
             {
                 ResultMessage = "Creating user successful",
-                UserModel = user
+                UserModel = dto
             };
 
             return Result<UserSuccess, UserFailure>.Success(successDto);

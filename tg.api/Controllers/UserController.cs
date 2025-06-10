@@ -30,7 +30,7 @@ namespace tg.api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<Result<UserSuccess, UserFailure>>> SignUpUser(
+        public async Task<ActionResult<SignUpUserResponse>> SignUpUser(
             SignUpUserRequest request,
             CancellationToken cancellationToken
         )
@@ -40,7 +40,7 @@ namespace tg.api.Controllers
             if (!result.Result.IsSuccess)
                 return BadRequest(result);
 
-            var token = _tokenRepository.CreateToken(request.Email, request.Username, result.Result.SuccessData.UserModel.Id);
+            var token = _tokenRepository.CreateToken(request.Email, request.Username, result.Result.SuccessData.UserModel.UserId);
 
             HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
             {

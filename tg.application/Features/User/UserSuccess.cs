@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using tg.domain.Dtos;
 using tg.domain.Entities;
 
 namespace tg.application.Features.User
@@ -9,6 +10,6 @@ namespace tg.application.Features.User
     public class UserSuccess
     {
         public string ResultMessage { get; set; } = string.Empty;
-        public UserModel? UserModel { get; set; }
+        public UserModelDto? UserModel { get; set; }
     }
 }
