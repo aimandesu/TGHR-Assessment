@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using tg.application.Common;
+using tg.application.Dtos;
 using tg.application.Repository;
 using tg.application.Repository.IUserRepository;
 using tg.domain.Entities;
@@ -27,13 +29,36 @@ namespace tg.application.Features.User.SignUp
             _mapper = mapper;
         }
 
-        public async Task<SignUpUserResponse> Handle(SignUpUserRequest request, CancellationToken cancellationToken)
+        public async Task<SignUpUserResponse> Handle(
+            SignUpUserRequest request,
+            CancellationToken cancellationToken
+        )
         {
             var user = _mapper.Map<UserModel>(request);
             var result = await _userRepository.SignUp(user, request.Password);
             await _unitOfWork.Save(cancellationToken);
 
-            return new SignUpUserResponse { Result = result };
+            if (!result.IsSuccess)
+            {
+                return new SignUpUserResponse
+                {
+                    Result = Result<UserSuccess, UserFailure>.Fail(result.FailureData!)
+                };
+            }
+
+            var dto = _mapper.Map<UserModelDto>(result.SuccessData!);
+
+            var successDto = new UserSuccess
+            {
+                ResultMessage = "User Created Account",
+                UserModel = dto
+            };
+
+            return new SignUpUserResponse
+            {
+                Result = Result<UserSuccess, UserFailure>.Success(successDto)
+            };
+
         }
 
     }

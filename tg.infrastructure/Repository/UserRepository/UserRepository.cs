@@ -38,53 +38,36 @@ namespace tg.infrastructure.Repository.UserRepository
 
         }
 
-        public async Task<Result<UserSuccess, UserFailure>> LoginUser(
+        public async Task<Result<UserModel, UserFailure>> LoginUser(
             string username,
             string password
         )
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            var user = await _userManager.Users.Include(e => e.Skills).FirstOrDefaultAsync(
+                x => x.UserName == username
+            );
 
             if (user == null)
             {
-                var failDto = new UserFailure
+                return Result<UserModel, UserFailure>.Fail(new UserFailure
                 {
                     ResultMessage = "Username not found"
-                };
-
-                return Result<UserSuccess, UserFailure>.Fail(failDto);
+                });
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
             if (!result.Succeeded)
             {
-
-                var failDto = new UserFailure
+                return Result<UserModel, UserFailure>.Fail(new UserFailure
                 {
                     ResultMessage = "Username not found and/or wrong password"
-                };
-
-                return Result<UserSuccess, UserFailure>.Fail(failDto);
+                });
             }
 
-            var dto = new UserModelDto
-            {
-                UserId = user.Id,
-                Email = user.Email,
-                Username = user.UserName
-            };
-
-
-            var successDto = new UserSuccess
-            {
-                ResultMessage = "User succeed login",
-                UserModel = dto
-            };
-
-            return Result<UserSuccess, UserFailure>.Success(successDto);
-
+            return Result<UserModel, UserFailure>.Success(user);
         }
+
 
         public async Task<UserModel?> SearchFreelancer(string email, string username)
         {
@@ -92,41 +75,32 @@ namespace tg.infrastructure.Repository.UserRepository
             _logger.LogInformation(username);
             _logger.LogInformation(email);
 
-            UserModel? user = await _context.Users.Include(e => e.Skills).FirstOrDefaultAsync(e => e.Email == email && e.UserName == username);
+            UserModel? user = await _context.Users.Include(e => e.Skills).FirstOrDefaultAsync(
+                e => e.Email == email &&
+                e.UserName == username
+            );
 
             return user;
 
         }
 
-        public async Task<Result<UserSuccess, UserFailure>> SignUp(UserModel user, string password)
+        public async Task<Result<UserModel, UserFailure>> SignUp(
+            UserModel user,
+            string password
+        )
         {
             var createdUser = await _userManager.CreateAsync(user, password);
 
             if (!createdUser.Succeeded)
             {
-                var failDto = new UserFailure
+
+                return Result<UserModel, UserFailure>.Fail(new UserFailure
                 {
                     ResultMessage = createdUser.ToString()
-                };
-
-                return Result<UserSuccess, UserFailure>.Fail(failDto);
+                });
             }
 
-            var dto = new UserModelDto
-            {
-                UserId = user.Id,
-                Email = user.Email,
-                Username = user.UserName
-            };
-
-
-            var successDto = new UserSuccess
-            {
-                ResultMessage = "Creating user successful",
-                UserModel = dto
-            };
-
-            return Result<UserSuccess, UserFailure>.Success(successDto);
+            return Result<UserModel, UserFailure>.Success(user);
 
         }
     }

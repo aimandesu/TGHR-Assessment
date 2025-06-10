@@ -8,7 +8,7 @@ namespace tg.application.Dtos
 {
     public class UserModelDto
     {
-        public string UserId { get; set; } = string.Empty;
+        public string Id { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         public List<SkillModelDto> Skills { get; set; } = [];

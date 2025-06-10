@@ -41,7 +41,11 @@ namespace tg.api.Controllers
             if (!result.Result.IsSuccess)
                 return BadRequest(result);
 
-            var token = _tokenRepository.CreateToken(request.Email, request.Username, result.Result.SuccessData.UserModel.UserId);
+            var token = _tokenRepository.CreateToken(
+                request.Email,
+                request.Username,
+                result.Result.SuccessData.UserModel.Id
+            );
 
             HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
             {
@@ -68,7 +72,7 @@ namespace tg.api.Controllers
             var token = _tokenRepository.CreateToken(
                 result.Result.SuccessData.UserModel.Email,
                 request.Username,
-                result.Result.SuccessData.UserModel.UserId
+                result.Result.SuccessData.UserModel.Id
             );
 
             HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
@@ -88,7 +92,11 @@ namespace tg.api.Controllers
             CancellationToken cancellationToken
         )
         {
-            var response = await _mediator.Send(new GetFreelancerRequest(request.Email, request.Username), cancellationToken);
+            var response = await _mediator.Send(
+                new GetFreelancerRequest(request.Email, request.Username),
+                cancellationToken
+            );
+
             return Ok(response);
         }
 

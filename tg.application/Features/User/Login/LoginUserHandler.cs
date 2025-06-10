@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity.Data;
+using tg.application.Common;
+using tg.application.Dtos;
 using tg.application.Features.User.SignUp;
 using tg.application.Repository;
 using tg.application.Repository.IUserRepository;
@@ -31,13 +33,34 @@ IUnitOfWork unitOfWork,
 
 
 
-        public async Task<LoginUserResponse> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+        public async Task<LoginUserResponse> Handle(
+            LoginUserRequest request,
+            CancellationToken cancellationToken
+        )
         {
-            //  var user = _mapper.Map<UserModel>(request);
             var result = await _userRepository.LoginUser(request.Username, request.Password);
             await _unitOfWork.Save(cancellationToken);
 
-            return new LoginUserResponse { Result = result };
+            if (!result.IsSuccess)
+            {
+                return new LoginUserResponse
+                {
+                    Result = Result<UserSuccess, UserFailure>.Fail(result.FailureData!)
+                };
+            }
+
+            var dto = _mapper.Map<UserModelDto>(result.SuccessData!);
+
+            var successDto = new UserSuccess
+            {
+                ResultMessage = "User succeed login",
+                UserModel = dto
+            };
+
+            return new LoginUserResponse
+            {
+                Result = Result<UserSuccess, UserFailure>.Success(successDto)
+            };
         }
     }
 }
