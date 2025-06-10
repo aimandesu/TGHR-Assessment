@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using tg.application.Common;
-using tg.domain.Dtos;
+using tg.application.Dtos;
 
 namespace tg.application.Features.User.Login
 {

@@ -10,7 +10,7 @@ using tg.application.Common;
 using tg.application.Features.User;
 using tg.application.Repository.ITokenRepository;
 using tg.application.Repository.IUserRepository;
-using tg.domain.Dtos;
+using tg.application.Dtos;
 using tg.domain.Entities;
 using tg.infrastructure.Data;
 
@@ -86,19 +86,15 @@ namespace tg.infrastructure.Repository.UserRepository
 
         }
 
-        public async Task<UserModelDto?> SearchFreelancer(string email, string username)
+        public async Task<UserModel?> SearchFreelancer(string email, string username)
         {
+
             _logger.LogInformation(username);
             _logger.LogInformation(email);
-            UserModel? user = await _context.Users.FirstOrDefaultAsync(e => e.Email == email && e.UserName == username);
-            var dto = new UserModelDto
-            {
-                UserId = user.Id,
-                Email = user.Email,
-                Username = user.UserName
-            };
 
-            return dto;
+            UserModel? user = await _context.Users.Include(e => e.Skills).FirstOrDefaultAsync(e => e.Email == email && e.UserName == username);
+
+            return user;
 
         }
 

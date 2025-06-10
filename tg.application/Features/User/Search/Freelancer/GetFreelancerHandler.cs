@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using tg.application.Repository.IUserRepository;
+using tg.application.Dtos;
 
 namespace tg.application.Features.User.Search.Freelancer
 {
@@ -22,13 +23,18 @@ namespace tg.application.Features.User.Search.Freelancer
             _mapper = mapper;
         }
 
-        public async Task<GetFreelancerResponse> Handle(GetFreelancerRequest request, CancellationToken cancellationToken)
+        public async Task<GetFreelancerResponse> Handle(
+            GetFreelancerRequest request,
+            CancellationToken cancellationToken
+        )
         {
-            var freelancer = await _userRepository.SearchFreelancer(request.Email, request.Username);
+            var userModel = await _userRepository.SearchFreelancer(request.Email, request.Username);
+
+            var dto = _mapper.Map<UserModelDto>(userModel);
 
             return new GetFreelancerResponse
             {
-                Freelancer = freelancer
+                Freelancer = dto
             };
         }
     }
