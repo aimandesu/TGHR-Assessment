@@ -38,9 +38,52 @@ namespace tg.infrastructure.Repository.UserRepository
 
         }
 
-        public Task LoginUser(UserModel user)
+        public async Task<Result<UserSuccess, UserFailure>> LoginUser(
+            string username,
+            string password
+        )
         {
-            throw new NotImplementedException();
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
+
+            if (user == null)
+            {
+                var failDto = new UserFailure
+                {
+                    ResultMessage = "Username not found"
+                };
+
+                return Result<UserSuccess, UserFailure>.Fail(failDto);
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+
+            if (!result.Succeeded)
+            {
+
+                var failDto = new UserFailure
+                {
+                    ResultMessage = "Username not found and/or wrong password"
+                };
+
+                return Result<UserSuccess, UserFailure>.Fail(failDto);
+            }
+
+            var dto = new UserModelDto
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                Username = user.UserName
+            };
+
+
+            var successDto = new UserSuccess
+            {
+                ResultMessage = "User succeed login",
+                UserModel = dto
+            };
+
+            return Result<UserSuccess, UserFailure>.Success(successDto);
+
         }
 
         public async Task<UserModelDto?> SearchFreelancer(string email, string username)

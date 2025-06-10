@@ -47,6 +47,9 @@ namespace tg.application.Features.Skill.Create
                 UserId = _userService.UserId!
             };
 
+            //We dont use request here bcs I want to map UserId here, i dont want user
+            //to put their own userid in the request
+
             skill = _mapper.Map<SkillModel>(skill); //this is what config uses for createskillmapper, we can also use request directly
             await _skillRepository.Create(skill);
             await _unitOfWork.Save(cancellationToken);

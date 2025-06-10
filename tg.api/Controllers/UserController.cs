@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using tg.application.Common;
 using tg.application.Features.User;
+using tg.application.Features.User.Login;
 using tg.application.Features.User.Search.Freelancer;
 using tg.application.Features.User.SignUp;
 using tg.application.Repository.ITokenRepository;
@@ -41,6 +42,34 @@ namespace tg.api.Controllers
                 return BadRequest(result);
 
             var token = _tokenRepository.CreateToken(request.Email, request.Username, result.Result.SuccessData.UserModel.UserId);
+
+            HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddMinutes(5)
+            });
+
+            return Ok(result);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginUserResponse>> LoginUser(
+            LoginUserRequest request,
+            CancellationToken cancellationToken
+        )
+        {
+            var result = await _mediator.Send(request, cancellationToken);
+
+            if (!result.Result.IsSuccess)
+                return BadRequest(result);
+
+            var token = _tokenRepository.CreateToken(
+                result.Result.SuccessData.UserModel.Email,
+                request.Username,
+                result.Result.SuccessData.UserModel.UserId
+            );
 
             HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
             {

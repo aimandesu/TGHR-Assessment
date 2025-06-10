@@ -12,7 +12,7 @@ namespace tg.application.Repository.IUserRepository
     public interface IUserRepository
     {
         Task<Result<UserSuccess, UserFailure>> SignUp(UserModel user, string password);
-        Task LoginUser(UserModel user);
+        Task<Result<UserSuccess, UserFailure>> LoginUser(string username, string password);
 
         Task<UserModelDto?> SearchFreelancer(string email, string username);
 
