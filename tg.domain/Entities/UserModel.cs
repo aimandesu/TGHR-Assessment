@@ -10,8 +10,10 @@ namespace tg.domain.Entities
     {
         // public string Username { get; set; } = string.Empty;
         // public string Email { get; set; } = string.Empty;
+        // public string PhoneNumber { get; set; } = string.Empty;
 
-        public string PhoneNo { get; set; } = string.Empty;
+        //everything commented out is part of IdentityUsers, so dont even need to write, but you can specificy override technically
+
         public List<SkillModel> Skills { get; set; } = [];
         public List<HobbyModel> Hobbies { get; set; } = [];
     }

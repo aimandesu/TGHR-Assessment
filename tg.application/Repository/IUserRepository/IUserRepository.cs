@@ -11,11 +11,13 @@ namespace tg.application.Repository.IUserRepository
 {
     public interface IUserRepository
     {
+        Task<UserModel?> GetUserById(string id);
         Task<Result<UserModel, UserFailure>> SignUp(UserModel user, string password);
         Task<Result<UserModel, UserFailure>> LoginUser(string username, string password);
         Task<UserModel?> SearchFreelancer(string email, string username);
         Task<List<UserModel>> SearchAllFreelancer();
         Task<UserModel> DeleteUser(string email, string password, string passwordConfirmation);
+        Task<UserModel> UpdateUser(UserModel userModel);
 
     }
 }

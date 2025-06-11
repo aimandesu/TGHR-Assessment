@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tg.application.Common;
 using tg.application.Features.User;
@@ -11,6 +12,7 @@ using tg.application.Features.User.Get;
 using tg.application.Features.User.Login;
 using tg.application.Features.User.Search;
 using tg.application.Features.User.SignUp;
+using tg.application.Features.User.Update;
 using tg.application.Repository.ITokenRepository;
 using tg.domain.Entities;
 
@@ -124,6 +126,22 @@ namespace tg.api.Controllers
             var response = await _mediator.Send(
                request,
                cancellationToken
+            );
+
+            return Ok(response);
+
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPut("update")]
+        public async Task<ActionResult<UpdateUserResponse>> UpdateUser(
+            UpdateUserRequest request,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await _mediator.Send(
+                request,
+                cancellationToken
             );
 
             return Ok(response);

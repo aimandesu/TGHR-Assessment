@@ -73,6 +73,14 @@ namespace tg.infrastructure.Repository.UserRepository
 
         }
 
+        public async Task<UserModel?> GetUserById(string id)
+        {
+            return await _context.Users
+                .Include(u => u.Skills)
+                .Include(u => u.Hobbies)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         public async Task<Result<UserModel, UserFailure>> LoginUser(
             string username,
             string password
@@ -145,5 +153,15 @@ namespace tg.infrastructure.Repository.UserRepository
             return Result<UserModel, UserFailure>.Success(user);
 
         }
+
+        public async Task<UserModel> UpdateUser(UserModel userModel)
+        {
+            // _logger.LogInformation(userModel.ToString());
+
+            _context.Users.Update(userModel);
+            await _context.SaveChangesAsync();
+            return userModel;
+        }
+
     }
 }

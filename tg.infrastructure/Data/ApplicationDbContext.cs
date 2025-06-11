@@ -22,6 +22,18 @@ namespace tg.infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<UserModel>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            builder.Entity<UserModel>()
+                .HasIndex(u => u.UserName)
+                .IsUnique();
+
+            builder.Entity<UserModel>()
+                .HasIndex(u => u.PhoneNumber)
+                .IsUnique();
         }
 
     }
