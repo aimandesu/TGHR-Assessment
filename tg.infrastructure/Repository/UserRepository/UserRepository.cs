@@ -38,6 +38,41 @@ namespace tg.infrastructure.Repository.UserRepository
 
         }
 
+        public async Task<UserModel> DeleteUser(
+            string email,
+            string password,
+            string passwordConfirmation
+        )
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not found");
+            }
+
+            if (password != passwordConfirmation)
+            {
+                throw new ArgumentException("Password and confirmation do not match");
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(
+                user,
+                password,
+                false
+            );
+
+            if (!result.Succeeded)
+            {
+                throw new UnauthorizedAccessException("Invalid credentials");
+            }
+
+            await _userManager.DeleteAsync(user);
+
+            return user;
+
+        }
+
         public async Task<Result<UserModel, UserFailure>> LoginUser(
             string username,
             string password

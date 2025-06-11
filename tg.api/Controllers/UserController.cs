@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using tg.application.Common;
 using tg.application.Features.User;
+using tg.application.Features.User.Delete;
 using tg.application.Features.User.Get;
 using tg.application.Features.User.Login;
 using tg.application.Features.User.Search;
@@ -112,6 +113,21 @@ namespace tg.api.Controllers
             );
 
             return Ok(response);
+        }
+
+        [HttpDelete("delete")]
+        public async Task<ActionResult<UserModel>> DeleteUser(
+            DeleteUserRequest request,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await _mediator.Send(
+               request,
+               cancellationToken
+            );
+
+            return Ok(response);
+
         }
 
     }
