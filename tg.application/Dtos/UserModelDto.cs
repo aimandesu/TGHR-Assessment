@@ -14,5 +14,6 @@ namespace tg.application.Dtos
         public string PhoneNumber { get; set; } = string.Empty;
         public bool IsArchived { get; set; }
         public List<SkillModelDto> Skills { get; set; } = [];
+        public List<HobbyModelDto> Hobbies { get; set; } = [];
     }
 }

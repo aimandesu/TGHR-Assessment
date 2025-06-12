@@ -9,6 +9,6 @@ namespace tg.application.Repository.ISkillRepository
     public interface ISkillRepository
     {
         Task Create(SkillModel skill);
-        Task<List<SkillModel>> GetSkills();
+        Task<List<SkillModel>> GetSkills(string userId);
     }
 }

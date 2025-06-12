@@ -15,6 +15,7 @@ namespace tg.application.Features.User.Login
             // CreateMap<LoginUserRequest, UserModel>();
             CreateMap<UserModel, UserModelDto>();
             CreateMap<SkillModel, SkillModelDto>();
+            CreateMap<HobbyModel, HobbyModelDto>();
         }
     }
 }

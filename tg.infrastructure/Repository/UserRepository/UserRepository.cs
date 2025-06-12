@@ -86,9 +86,12 @@ namespace tg.infrastructure.Repository.UserRepository
             string password
         )
         {
-            var user = await _userManager.Users.Include(e => e.Skills).FirstOrDefaultAsync(
-                x => x.UserName == username
-            );
+            var user = await _userManager.Users
+                .Include(e => e.Skills)
+                .Include(e => e.Hobbies)
+                .FirstOrDefaultAsync(
+                    x => x.UserName == username
+                );
 
             if (user == null)
             {
@@ -125,10 +128,13 @@ namespace tg.infrastructure.Repository.UserRepository
             _logger.LogInformation(username);
             _logger.LogInformation(email);
 
-            UserModel? user = await _context.Users.Include(e => e.Skills).FirstOrDefaultAsync(
-                e => e.Email == email &&
-                e.UserName == username
-            );
+            UserModel? user = await _context.Users
+                .Include(e => e.Skills)
+                .Include(e => e.Hobbies)
+                .FirstOrDefaultAsync(
+                    e => e.Email == email &&
+                    e.UserName == username
+                );
 
             return user;
 

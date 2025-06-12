@@ -4,43 +4,43 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using tg.application.Repository.ISkillRepository;
+using tg.application.Repository.IHobbyRepository;
 using tg.application.Repository.IUserRepository;
 
-namespace tg.application.Features.Skill.Get
+namespace tg.application.Features.Hobby.Get
 {
-    public sealed class GetSkillHandler : IRequestHandler<GetSkillRequest, List<GetSkillResponse>>
+    public class GetHobbyHandler : IRequestHandler<GetHobbyRequest, List<GetHobbyResponse>>
     {
-
-        private readonly ISkillRepository _skillRepository;
+        private readonly IHobbyRepository _hobbyRepository;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public GetSkillHandler(
-            ISkillRepository skillRepository,
+        public GetHobbyHandler(
+             IHobbyRepository hobbyRepository,
             IMapper mapper,
             IUserService userService
         )
         {
-            _skillRepository = skillRepository;
+            _hobbyRepository = hobbyRepository;
             _mapper = mapper;
             _userService = userService;
         }
 
-
-        public async Task<List<GetSkillResponse>> Handle(
-            GetSkillRequest request,
+        public async Task<List<GetHobbyResponse>> Handle(
+            GetHobbyRequest request,
             CancellationToken cancellationToken
         )
         {
+
             if (!_userService.IsAuthenticated)
                 throw new UnauthorizedAccessException("User is not authenticated");
 
             var userId = _userService.UserId;
 
-            var skills = await _skillRepository.GetSkills(userId ?? "");
+            var hobbies = await _hobbyRepository.GetHobbies(userId ?? "");
 
-            return _mapper.Map<List<GetSkillResponse>>(skills);
+            return _mapper.Map<List<GetHobbyResponse>>(hobbies);
+
         }
     }
 }

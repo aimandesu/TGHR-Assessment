@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using tg.application.Repository.ISkillRepository;
+using tg.application.Repository.IHobbyRepository;
 using tg.domain.Entities;
 using tg.infrastructure.Data;
 
-namespace tg.infrastructure.Repository.SkillRepository
+namespace tg.infrastructure.Repository.HobbyRepository
 {
-    public class SkillRepository : ISkillRepository
+    public class HobbyRepository : IHobbyRepository
     {
+
         private readonly ApplicationDbContext _context;
 
-        public SkillRepository(
+        public HobbyRepository(
             ApplicationDbContext context
         )
         {
             _context = context;
         }
 
-        public async Task Create(SkillModel skill)
+        public async Task Create(HobbyModel hobbyModel)
         {
-            await _context.Skills.AddAsync(skill);
+            await _context.Hobbies.AddAsync(hobbyModel);
         }
 
-        public async Task<List<SkillModel>> GetSkills(string userId)
+        public async Task<List<HobbyModel>> GetHobbies(string userId)
         {
-            return await _context.Skills
+            return await _context.Hobbies
                 .Where((e) => e.UserId == userId)
                 .ToListAsync();
         }
