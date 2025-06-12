@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tg.application.Common;
 using tg.application.Features.User;
+using tg.application.Features.User.Archive;
 using tg.application.Features.User.Delete;
 using tg.application.Features.User.Get;
 using tg.application.Features.User.Login;
@@ -148,6 +149,20 @@ namespace tg.api.Controllers
             return Ok(response);
 
         }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPatch("archive/{isArchived}")]
+        public async Task<ActionResult<UserModel>> UpdateArchive(
+        bool isArchived,
+        CancellationToken cancellationToken
+        )
+        {
+            var request = new ArchiveUnarchiveFreelancerRequest(isArchived);
+
+            var response = await _mediator.Send(request, cancellationToken);
+            return Ok(response);
+        }
+
 
     }
 }

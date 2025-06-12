@@ -14,6 +14,8 @@ namespace tg.domain.Entities
 
         //everything commented out is part of IdentityUsers, so dont even need to write, but you can specificy override technically
 
+        public bool IsArchived { get; set; } = false;
+
         public List<SkillModel> Skills { get; set; } = [];
         public List<HobbyModel> Hobbies { get; set; } = [];
 
