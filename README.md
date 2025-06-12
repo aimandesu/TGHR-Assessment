@@ -159,3 +159,10 @@ Others will work directly
     <img src="images/response/response_4.png" width="200" alt="Response 4">
     <img src="images/response/response_5.png" width="200" alt="Response 5">
 </div>
+
+## Unit Test
+
+- You can run unit test with command
+```
+dotnet test
+```
