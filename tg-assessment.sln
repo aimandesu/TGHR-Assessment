@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tg.application", "tg.applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tg.infrastructure", "tg.infrastructure\tg.infrastructure.csproj", "{3FFB642D-9124-421F-82B0-D31ED5B88CAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0C88DD14-F956-CE84-757C-A364CCF449FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tg.application.unittests", "test\tg.application.unittests\tg.application.unittests.csproj", "{EE5A9590-53DE-4574-B620-4274EAF3B2A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,9 +73,24 @@ Global
 		{3FFB642D-9124-421F-82B0-D31ED5B88CAC}.Release|x64.Build.0 = Release|Any CPU
 		{3FFB642D-9124-421F-82B0-D31ED5B88CAC}.Release|x86.ActiveCfg = Release|Any CPU
 		{3FFB642D-9124-421F-82B0-D31ED5B88CAC}.Release|x86.Build.0 = Release|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Debug|x64.Build.0 = Debug|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Release|x64.ActiveCfg = Release|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Release|x64.Build.0 = Release|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EE5A9590-53DE-4574-B620-4274EAF3B2A4} = {0C88DD14-F956-CE84-757C-A364CCF449FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32CD2CF0-15AC-41A0-A6E1-F528F5F1A240}
