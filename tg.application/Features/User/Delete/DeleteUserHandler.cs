@@ -15,16 +15,19 @@ namespace tg.application.Features.User.Delete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
         public DeleteUserHandler(
             IUnitOfWork unitOfWork,
             IUserRepository userRepository,
-            IMapper mapper
+            IMapper mapper,
+            IUserService userService
         )
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _mapper = mapper;
+            _userService = userService;
         }
 
         public async Task<DeleteUserResponse> Handle(
@@ -32,6 +35,14 @@ namespace tg.application.Features.User.Delete
             CancellationToken cancellationToken
         )
         {
+            if (!_userService.IsAuthenticated)
+                throw new UnauthorizedAccessException("User is not authenticated");
+
+            if (request.Email != _userService.Email)
+            {
+                throw new UnauthorizedAccessException("User to delete is not the same one that authenticated");
+            }
+
             var userModel = await _userRepository.DeleteUser(
                 request.Email,
                 request.Password,

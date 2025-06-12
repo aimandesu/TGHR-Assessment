@@ -16,5 +16,34 @@ namespace tg.domain.Entities
 
         public List<SkillModel> Skills { get; set; } = [];
         public List<HobbyModel> Hobbies { get; set; } = [];
+
+        public void UpdateEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("Email cannot be empty");
+
+            if (!IsValidEmail(email))
+                throw new ArgumentException("Invalid email format");
+
+            Email = email;
+        }
+
+        public void UpdateUserName(string userName)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                throw new ArgumentException("Username cannot be empty");
+
+            UserName = userName;
+        }
+
+        public void UpdatePhoneNumber(string phoneNumber)
+        {
+            PhoneNumber = phoneNumber;
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            return email.Contains("@") && email.Contains(".");
+        }
     }
 }

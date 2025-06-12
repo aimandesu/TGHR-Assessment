@@ -117,6 +117,7 @@ namespace tg.api.Controllers
             return Ok(response);
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpDelete("delete")]
         public async Task<ActionResult<UserModel>> DeleteUser(
             DeleteUserRequest request,

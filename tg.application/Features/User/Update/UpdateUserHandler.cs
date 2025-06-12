@@ -40,6 +40,7 @@ namespace tg.application.Features.User.Update
 
             if (!_userService.IsAuthenticated)
                 throw new UnauthorizedAccessException("User is not authenticated");
+
             var currentUserId = _userService.UserId;
 
 
@@ -47,11 +48,11 @@ namespace tg.application.Features.User.Update
 
             var userModel = await _userRepository.GetUserById(currentUserId);
 
-            userModel.Email = request.User.Email;
-            userModel.UserName = request.User.Username;
-            userModel.PhoneNumber = request.User.PhoneNumber;
+            userModel?.UpdateEmail(request.User.Email);
+            userModel?.UpdateUserName(request.User.Username);
+            userModel?.UpdatePhoneNumber(request.User.PhoneNumber);
 
-            var user = await _userRepository.UpdateUser(userModel);
+            var user = _userRepository.UpdateUser(userModel);
 
             await _unitOfWork.Save(cancellationToken);
 

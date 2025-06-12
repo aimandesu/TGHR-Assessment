@@ -154,12 +154,11 @@ namespace tg.infrastructure.Repository.UserRepository
 
         }
 
-        public async Task<UserModel> UpdateUser(UserModel userModel)
+        public UserModel UpdateUser(UserModel userModel)
         {
             // _logger.LogInformation(userModel.ToString());
 
             _context.Users.Update(userModel);
-            await _context.SaveChangesAsync();
             return userModel;
         }
 

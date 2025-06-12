@@ -20,5 +20,10 @@ namespace tg.infrastructure.Repository
         {
             return _context.SaveChangesAsync(cancellationToken);
         }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
     }
 }

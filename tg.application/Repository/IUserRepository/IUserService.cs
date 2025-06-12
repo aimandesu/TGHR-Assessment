@@ -9,6 +9,7 @@ namespace tg.application.Repository.IUserRepository
     {
         string? UserId { get; }
         string? UserName { get; }
+        string? Email { get; }
         bool IsAuthenticated { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace tg.application.Repository.IUserRepository
         Task<UserModel?> SearchFreelancer(string email, string username);
         Task<List<UserModel>> SearchAllFreelancer();
         Task<UserModel> DeleteUser(string email, string password, string passwordConfirmation);
-        Task<UserModel> UpdateUser(UserModel userModel);
+        UserModel UpdateUser(UserModel userModel);
 
     }
 }
