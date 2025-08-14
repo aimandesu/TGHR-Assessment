@@ -18,6 +18,7 @@ namespace tg.infrastructure.Data
         public override DbSet<UserModel> Users { get; set; }
         public DbSet<SkillModel> Skills { get; set; }
         public DbSet<HobbyModel> Hobbies { get; set; }
+        public DbSet<FollowerModel> Followers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +35,18 @@ namespace tg.infrastructure.Data
             builder.Entity<UserModel>()
                 .HasIndex(u => u.PhoneNumber)
                 .IsUnique();
+            
+            builder.Entity<FollowerModel>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.Followers)
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<FollowerModel>()
+                .HasOne(f => f.Follower)
+                .WithMany(u => u.Following)
+                .HasForeignKey(f => f.FollowerId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

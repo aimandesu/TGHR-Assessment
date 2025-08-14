@@ -18,6 +18,12 @@ namespace tg.domain.Entities
 
         public List<SkillModel> Skills { get; set; } = [];
         public List<HobbyModel> Hobbies { get; set; } = [];
+        
+        // Users following this user
+        public List<FollowerModel> Followers { get; set; } = [];
+    
+        // Users this user is following
+        public List<FollowerModel> Following { get; set; } = [];
 
         public void UpdateEmail(string email)
         {
