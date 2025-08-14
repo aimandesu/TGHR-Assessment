@@ -20,33 +20,46 @@ namespace tg.infrastructure.Data
         public DbSet<HobbyModel> Hobbies { get; set; }
         public DbSet<FollowerModel> Followers { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modalBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modalBuilder);
 
-            builder.Entity<UserModel>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            modalBuilder.Entity<UserModel>(builder =>
+                {
+                    builder
+                        .ToTable("Users", tableBuilder =>
+                        {
+                            tableBuilder.HasCheckConstraint(
+                                name: "CK_Username_NotLess_Five",
+                                sql: $"LEN([{nameof(UserModel.UserName)}]) >= 5");
+                        } )
+                        .HasIndex(u => u.Email)
+                        .IsUnique();
+                    
+                    builder
+                        .HasIndex(u => u.UserName)
+                        .IsUnique();
 
-            builder.Entity<UserModel>()
-                .HasIndex(u => u.UserName)
-                .IsUnique();
+                    builder
+                        .HasIndex(u => u.PhoneNumber)
+                        .IsUnique();
+                });
 
-            builder.Entity<UserModel>()
-                .HasIndex(u => u.PhoneNumber)
-                .IsUnique();
-            
-            builder.Entity<FollowerModel>()
-                .HasOne(f => f.User)
-                .WithMany(u => u.Followers)
-                .HasForeignKey(f => f.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modalBuilder.Entity<FollowerModel>(builder =>
+            {
+                builder
+                    .HasOne(f => f.User)
+                    .WithMany(u => u.Followers)
+                    .HasForeignKey(f => f.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<FollowerModel>()
-                .HasOne(f => f.Follower)
-                .WithMany(u => u.Following)
-                .HasForeignKey(f => f.FollowerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                builder
+                    .HasOne(f => f.Follower)
+                    .WithMany(u => u.Following)
+                    .HasForeignKey(f => f.FollowerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
         }
 
     }

@@ -43,7 +43,7 @@ namespace tg.application.Features.Skill.Create
             var skill = new SkillModel
             {
                 SkillName = request.SkillName,
-                ProficiencyLevel = request.ProficiencyLevel,
+                Proficiency = request.ProficiencyLevel,
                 UserId = _userService.UserId!
             };
 

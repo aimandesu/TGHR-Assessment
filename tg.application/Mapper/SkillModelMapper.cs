@@ -12,7 +12,7 @@ public static class SkillModelMapper
         {
             Id = skillModel.Id,
             SkillName = skillModel.SkillName,
-            ProficiencyLevel = skillModel.ProficiencyLevel,
+            ProficiencyLevel = skillModel.Proficiency,
         };
     }
 }
