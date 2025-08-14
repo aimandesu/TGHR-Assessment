@@ -55,7 +55,7 @@ namespace tg.application.unittests.Features.User.SignUp
                 Username = user.UserName
             };
 
-            var successResult = Result<UserModel, UserFailure>.Success(user);
+            var successResult = ResultResponse<UserModel, UserFailure>.Success(user);
 
             _mapperMock.Setup(m => m.Map<UserModel>(request))
                 .Returns(user);
@@ -75,10 +75,10 @@ namespace tg.application.unittests.Features.User.SignUp
 
 
             // Then
-            Assert.True(response.Result.IsSuccess);
-            Assert.NotNull(response.Result.SuccessData);
-            Assert.Equal("User Created Account", response.Result.SuccessData!.ResultMessage);
-            Assert.Equal(userDto.Email, response.Result?.SuccessData?.UserModel?.Email);
+            Assert.True(response.ResultResponse.IsSuccess);
+            Assert.NotNull(response.ResultResponse.SuccessData);
+            Assert.Equal("User Created Account", response.ResultResponse.SuccessData!.ResultMessage);
+            Assert.Equal(userDto.Email, response.ResultResponse?.SuccessData?.UserModel?.Email);
 
             // Verify interactions
             _userRepositoryMock.Verify(r => r.SignUp(user, request.Password), Times.Once);

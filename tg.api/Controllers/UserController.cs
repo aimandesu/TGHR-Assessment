@@ -43,13 +43,13 @@ namespace tg.api.Controllers
         {
             var result = await _mediator.Send(request, cancellationToken);
 
-            if (!result.Result.IsSuccess)
+            if (!result.ResultResponse.IsSuccess)
                 return BadRequest(result);
 
             var token = _tokenRepository.CreateToken(
                 request.Email,
                 request.Username,
-                result.Result.SuccessData.UserModel.Id
+                result.ResultResponse.SuccessData.UserModel.Id
             );
 
             HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
@@ -71,13 +71,13 @@ namespace tg.api.Controllers
         {
             var result = await _mediator.Send(request, cancellationToken);
 
-            if (!result.Result.IsSuccess)
+            if (!result.ResultResponse.IsSuccess)
                 return BadRequest(result);
 
             var token = _tokenRepository.CreateToken(
-                result.Result.SuccessData.UserModel.Email,
+                result.ResultResponse.SuccessData.UserModel.Email,
                 request.Username,
-                result.Result.SuccessData.UserModel.Id
+                result.ResultResponse.SuccessData.UserModel.Id
             );
 
             HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
@@ -105,13 +105,17 @@ namespace tg.api.Controllers
             return Ok(response);
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("freelancer/getall")]
         public async Task<ActionResult<List<GetAllFreelancerResponse>>> GetAllFreelancer(
-            CancellationToken cancellationToken
+            CancellationToken cancellationToken,
+            [FromQuery] PaginationQueryObject paginationQueryObject
         )
         {
             var response = await _mediator.Send(
-                new GetAllFreelancerRequest(),
+                new GetAllFreelancerRequest(
+                    paginationQueryObject
+                ),
                 cancellationToken
             );
 

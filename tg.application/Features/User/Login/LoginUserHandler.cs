@@ -45,7 +45,7 @@ namespace tg.application.Features.User.Login
             {
                 return new LoginUserResponse
                 {
-                    Result = Result<UserSuccess, UserFailure>.Fail(result.FailureData!)
+                    ResultResponse = ResultResponse<UserSuccess, UserFailure>.Fail(result.FailureData!)
                 };
             }
 
@@ -59,7 +59,7 @@ namespace tg.application.Features.User.Login
 
             return new LoginUserResponse
             {
-                Result = Result<UserSuccess, UserFailure>.Success(successDto)
+                ResultResponse = ResultResponse<UserSuccess, UserFailure>.Success(successDto)
             };
         }
     }

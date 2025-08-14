@@ -42,7 +42,7 @@ namespace tg.application.Features.User.SignUp
             {
                 return new SignUpUserResponse
                 {
-                    Result = Result<UserSuccess, UserFailure>.Fail(result.FailureData!)
+                    ResultResponse = ResultResponse<UserSuccess, UserFailure>.Fail(result.FailureData!)
                 };
             }
 
@@ -56,7 +56,7 @@ namespace tg.application.Features.User.SignUp
 
             return new SignUpUserResponse
             {
-                Result = Result<UserSuccess, UserFailure>.Success(successDto)
+                ResultResponse = ResultResponse<UserSuccess, UserFailure>.Success(successDto)
             };
 
         }

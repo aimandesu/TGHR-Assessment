@@ -81,7 +81,7 @@ namespace tg.infrastructure.Repository.UserRepository
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<Result<UserModel, UserFailure>> LoginUser(
+        public async Task<ResultResponse<UserModel, UserFailure>> LoginUser(
             string username,
             string password
         )
@@ -95,7 +95,7 @@ namespace tg.infrastructure.Repository.UserRepository
 
             if (user == null)
             {
-                return Result<UserModel, UserFailure>.Fail(new UserFailure
+                return ResultResponse<UserModel, UserFailure>.Fail(new UserFailure
                 {
                     ResultMessage = "Username not found"
                 });
@@ -105,21 +105,32 @@ namespace tg.infrastructure.Repository.UserRepository
 
             if (!result.Succeeded)
             {
-                return Result<UserModel, UserFailure>.Fail(new UserFailure
+                return ResultResponse<UserModel, UserFailure>.Fail(new UserFailure
                 {
                     ResultMessage = "Username not found and/or wrong password"
                 });
             }
 
-            return Result<UserModel, UserFailure>.Success(user);
+            return ResultResponse<UserModel, UserFailure>.Success(user);
         }
 
-        public async Task<List<UserModel>> SearchAllFreelancer()
+        public async Task<List<UserModel>> SearchAllFreelancer(
+            PaginationQueryObject paginationQueryObject
+        )
         {
-            var userModels = await _context.Users.ToListAsync();
-            _logger.LogInformation(userModels.ToString());
+            var query = _context.Users.AsQueryable();
 
-            return userModels;
+            var skipNumber = (paginationQueryObject.PageNumber - 1) * paginationQueryObject.PageSize;
+
+
+            _logger.LogInformation(paginationQueryObject.PageNumber.ToString());
+            _logger.LogInformation(paginationQueryObject.PageSize.ToString());
+
+
+            return await query.Skip(skipNumber)
+                .Take(paginationQueryObject.PageSize).ToListAsync();
+
+            // userModels;
         }
 
         public async Task<UserModel?> SearchFreelancer(string email, string username)
@@ -140,7 +151,7 @@ namespace tg.infrastructure.Repository.UserRepository
 
         }
 
-        public async Task<Result<UserModel, UserFailure>> SignUp(
+        public async Task<ResultResponse<UserModel, UserFailure>> SignUp(
             UserModel user,
             string password
         )
@@ -150,13 +161,13 @@ namespace tg.infrastructure.Repository.UserRepository
             if (!createdUser.Succeeded)
             {
 
-                return Result<UserModel, UserFailure>.Fail(new UserFailure
+                return ResultResponse<UserModel, UserFailure>.Fail(new UserFailure
                 {
                     ResultMessage = createdUser.ToString()
                 });
             }
 
-            return Result<UserModel, UserFailure>.Success(user);
+            return ResultResponse<UserModel, UserFailure>.Success(user);
 
         }
 

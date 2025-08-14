@@ -9,6 +9,6 @@ namespace tg.application.Features.User.Login
 {
     public sealed record class LoginUserResponse
     {
-        required public Result<UserSuccess, UserFailure> Result { get; set; }
+        required public ResultResponse<UserSuccess, UserFailure> ResultResponse { get; set; }
     }
 }

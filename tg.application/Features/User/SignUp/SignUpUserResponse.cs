@@ -8,6 +8,6 @@ namespace tg.application.Features.User.SignUp
 {
     public sealed record class SignUpUserResponse
     {
-        required public Result<UserSuccess, UserFailure> Result { get; set; }
+        required public ResultResponse<UserSuccess, UserFailure> ResultResponse { get; set; }
     }
 }
