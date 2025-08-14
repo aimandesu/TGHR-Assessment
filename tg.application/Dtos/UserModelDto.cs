@@ -15,5 +15,14 @@ namespace tg.application.Dtos
         public bool IsArchived { get; set; }
         public List<SkillModelDto> Skills { get; set; } = [];
         public List<HobbyModelDto> Hobbies { get; set; } = [];
+        public List<FollowerModelDto> Followers { get; set; } = [];
+        public List<FollowerModelDto> Followings { get; set; } = [];
     }
+
+    public class FollowerUserModelDto
+    {
+        public string Id { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+    }
+    
 }
