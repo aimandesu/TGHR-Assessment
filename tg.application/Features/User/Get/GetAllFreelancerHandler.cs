@@ -29,7 +29,9 @@ namespace tg.application.Features.User.Get
         )
         {
 
-            var freelancers = await _userRepository.SearchAllFreelancer();
+            var freelancers = await _userRepository.SearchAllFreelancer(
+                request.PaginationQueryObject
+            );
 
             return _mapper.Map<List<GetAllFreelancerResponse>>(freelancers);
 
