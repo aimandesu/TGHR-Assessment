@@ -9,9 +9,12 @@ using tg.application.Common;
 using tg.application.Features.Follower.Follow;
 using tg.application.Features.Follower.GetFollower;
 using tg.application.Features.Following.GetFollower;
+using tg.application.Features.Service.Create;
+using tg.application.Features.Service.Delete;
 using tg.application.Repository;
 using tg.application.Repository.IFollowerRepository;
 using tg.application.Repository.IHobbyRepository;
+using tg.application.Repository.IServiceRepository;
 using tg.application.Repository.ISkillRepository;
 using tg.application.Repository.ITokenRepository;
 using tg.application.Repository.IUserRepository;
@@ -20,6 +23,7 @@ using tg.infrastructure.Data;
 using tg.infrastructure.Repository;
 using tg.infrastructure.Repository.FollowerRepository;
 using tg.infrastructure.Repository.HobbyRepository;
+using tg.infrastructure.Repository.ServiceRepository;
 using tg.infrastructure.Repository.SkillRepository;
 using tg.infrastructure.Repository.TokenRepository;
 using tg.infrastructure.Repository.UserRepository;
@@ -40,9 +44,18 @@ namespace tg.infrastructure
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IUserService, UserService>();
             // Custom mediator
+            //IFollowRepository
             services.AddScoped<IFollowerRepository, FollowerRepository>();
             services.AddScoped<ICommandHandler<CreateFollowRequest, Result<CreateFollowResponse>>, CreateFollowHandler>();
             services.AddScoped<ICommandHandler<GetFollowerRequest, GetFollowerResponse>, GetFollowerHandler>();
+            //IServiceRepository
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services
+                .AddScoped<ICommandHandler<CreateServiceRequest, Result<CreateServiceResponse>>,
+                    CreateServiceHandler>();
+            services
+                .AddScoped<ICommandHandler<DeleteServiceRequest, Result<DeleteServiceResponse>>,
+                    DeleteServiceHandler>();
         }
     }
 }

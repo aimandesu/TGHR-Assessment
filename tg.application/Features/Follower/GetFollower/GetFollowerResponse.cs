@@ -5,5 +5,5 @@ namespace tg.application.Features.Follower.GetFollower;
 
 public sealed record class GetFollowerResponse
 {
-    public List<FollowerModelDto> Followers { get; set; }
+    public List<FollowerModelDto> Followers { get; set; } = [];
 }

@@ -41,7 +41,7 @@ namespace tg.application.Features.User.Archive
 
             var userId = _userService.UserId;
 
-            var user = await _userRepository.GetUserById(userId);
+            var user = await _userRepository.GetUserById(userId ?? "");
             user.IsArchived = request.IsArchived;
             await _unitOfWork.Save(cancellationToken);
 

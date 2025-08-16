@@ -19,6 +19,11 @@ namespace tg.infrastructure.Data
         public DbSet<SkillModel> Skills { get; set; }
         public DbSet<HobbyModel> Hobbies { get; set; }
         public DbSet<FollowerModel> Followers { get; set; }
+        public DbSet<PackageModel>  Packages { get; set; }
+        public DbSet<PaymentModel> Payments { get; set; }
+        public DbSet<ReviewModel> Reviews { get; set; }
+        public DbSet<ServiceModel> Services { get; set; }
+        public DbSet<TaskModel> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modalBuilder)
         {
@@ -58,6 +63,29 @@ namespace tg.infrastructure.Data
                     .WithMany(u => u.Following)
                     .HasForeignKey(f => f.FollowerId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modalBuilder.Entity<ServiceModel>(builder =>
+            {
+                builder
+                    .HasOne(s => s.User)
+                    .WithMany(u => u.Services);
+
+                builder
+                    .HasMany(s => s.Packages)
+                    .WithOne(p => p.Service);
+
+            });
+
+            modalBuilder.Entity<PackageModel>(builder =>
+            {
+                builder
+                    .Property(p => p.Price).IsRequired();
+            });
+
+            modalBuilder.Entity<TaskModel>(builder =>
+            {
+
             });
 
         }

@@ -46,7 +46,7 @@ namespace tg.application.Features.User.Update
 
             // var userModel = _mapper.Map<UserModel>(request.User);
 
-            var userModel = await _userRepository.GetUserById(currentUserId);
+            var userModel = await _userRepository.GetUserById(currentUserId ?? "");
 
             userModel?.UpdateEmail(request.User.Email);
             userModel?.UpdateUserName(request.User.Username);

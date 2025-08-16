@@ -24,6 +24,10 @@ namespace tg.domain.Entities
     
         // Users this user is following
         public List<FollowerModel> Following { get; set; } = [];
+        //Services
+        public List<ServiceModel> Services { get; set; } = [];
+        public List<TaskModel> ClientTasks { get; set; } = []; //my client tasks still have
+        // public List<TaskModel> FreelancerTasks { get; set; } = [];
 
         public void UpdateEmail(string email)
         {

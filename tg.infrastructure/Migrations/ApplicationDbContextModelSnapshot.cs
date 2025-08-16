@@ -202,6 +202,105 @@ namespace tg.infrastructure.Migrations
                     b.ToTable("Hobbies");
                 });
 
+            modelBuilder.Entity("tg.domain.Entities.PackageModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PackageOffer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("Packages");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.PaymentModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId")
+                        .IsUnique();
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.ReviewModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId")
+                        .IsUnique();
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.ServiceModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Services");
+                });
+
             modelBuilder.Entity("tg.domain.Entities.SkillModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -224,6 +323,33 @@ namespace tg.infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.TaskModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClientId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("PackageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Progress")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId1");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("tg.domain.Entities.UserModel", b =>
@@ -390,6 +516,50 @@ namespace tg.infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("tg.domain.Entities.PackageModel", b =>
+                {
+                    b.HasOne("tg.domain.Entities.ServiceModel", "Service")
+                        .WithMany("Packages")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.PaymentModel", b =>
+                {
+                    b.HasOne("tg.domain.Entities.TaskModel", "Task")
+                        .WithOne("Payment")
+                        .HasForeignKey("tg.domain.Entities.PaymentModel", "TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.ReviewModel", b =>
+                {
+                    b.HasOne("tg.domain.Entities.TaskModel", "Task")
+                        .WithOne("Review")
+                        .HasForeignKey("tg.domain.Entities.ReviewModel", "TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.ServiceModel", b =>
+                {
+                    b.HasOne("tg.domain.Entities.UserModel", "User")
+                        .WithMany("Services")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("tg.domain.Entities.SkillModel", b =>
                 {
                     b.HasOne("tg.domain.Entities.UserModel", "User")
@@ -401,13 +571,46 @@ namespace tg.infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("tg.domain.Entities.TaskModel", b =>
+                {
+                    b.HasOne("tg.domain.Entities.UserModel", "Client")
+                        .WithMany("ClientTasks")
+                        .HasForeignKey("ClientId1");
+
+                    b.HasOne("tg.domain.Entities.PackageModel", "Package")
+                        .WithMany()
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.ServiceModel", b =>
+                {
+                    b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("tg.domain.Entities.TaskModel", b =>
+                {
+                    b.Navigation("Payment");
+
+                    b.Navigation("Review");
+                });
+
             modelBuilder.Entity("tg.domain.Entities.UserModel", b =>
                 {
+                    b.Navigation("ClientTasks");
+
                     b.Navigation("Followers");
 
                     b.Navigation("Following");
 
                     b.Navigation("Hobbies");
+
+                    b.Navigation("Services");
 
                     b.Navigation("Skills");
                 });

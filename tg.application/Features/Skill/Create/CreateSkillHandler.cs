@@ -44,7 +44,7 @@ namespace tg.application.Features.Skill.Create
             {
                 SkillName = request.SkillName,
                 Proficiency = request.ProficiencyLevel,
-                UserId = _userService.UserId!
+                UserId = _userService.UserId ?? ""
             };
 
             //We dont use request here bcs I want to map UserId here, i dont want user
