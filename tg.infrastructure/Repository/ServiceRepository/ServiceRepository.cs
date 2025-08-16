@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using tg.application.Common;
 using tg.application.Dtos;
 using tg.application.Repository.IServiceRepository;
 using tg.domain.Entities;
@@ -41,11 +42,21 @@ public class ServiceRepository : IServiceRepository
         if (service == null)
         {
             return null;
-        }; 
+        }
         
         _context.Services.Remove(service);
         
         return service;
         
+    }
+
+    public async Task<Pagination<ServiceModel>> GetAllServicePagination(
+        string userId,
+        int page, 
+        int pageSize)
+    {
+        return await _context.Services
+            .Where(u=> u.UserId == userId)
+            .PaginatedAsync(page, pageSize);
     }
 }

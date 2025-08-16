@@ -6,11 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using tg.application.Common;
+using tg.application.Dtos;
 using tg.application.Features.Follower.Follow;
 using tg.application.Features.Follower.GetFollower;
 using tg.application.Features.Following.GetFollower;
 using tg.application.Features.Service.Create;
 using tg.application.Features.Service.Delete;
+using tg.application.Features.Service.GetAll;
 using tg.application.Repository;
 using tg.application.Repository.IFollowerRepository;
 using tg.application.Repository.IHobbyRepository;
@@ -56,6 +58,8 @@ namespace tg.infrastructure
             services
                 .AddScoped<ICommandHandler<DeleteServiceRequest, Result<DeleteServiceResponse>>,
                     DeleteServiceHandler>();
+            services
+                .AddScoped<ICommandHandler<GetAllServiceRequest, Pagination<ServiceModelDto>>, GetAllServiceHandler>();
         }
     }
 }
