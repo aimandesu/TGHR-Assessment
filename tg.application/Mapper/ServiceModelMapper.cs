@@ -9,6 +9,7 @@ public static class ServiceModelMapper
     {
         return new ServiceModelDto
         {
+            Id = serviceModel.Id,
             Title = serviceModel.Title,
             Details = serviceModel.Details,
             User = serviceModel.User
