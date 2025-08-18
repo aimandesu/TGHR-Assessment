@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using tg.application.Common;
+using tg.application.Dtos;
 using tg.application.Features.Package.Create;
 using tg.application.Repository.IPackageRepository;
 using tg.domain.Entities;
@@ -38,5 +40,34 @@ public class PackageRepository : IPackageRepository
         await _context.Packages.AddAsync(package);
         
         return package;
+    }
+
+    public async Task<Pagination<PackageModelDto>> GetAllPackages(
+        string userId,
+        int page,
+        int pageSize,
+        Guid serviceId)
+    {
+        var query = _context.Packages
+            .AsNoTracking()
+            .Where(p => p.Service.UserId == userId);
+        
+        if (serviceId != Guid.Empty)
+        {
+            query = query.Where(p => p.ServiceId == serviceId);
+        }
+
+        var packageModelDto = query.Select(p => new PackageModelDto //or just p.ToPackageModelDto()
+        {
+            Id = p.Id,
+            Price = p.Price,
+            PackageOffer = p.PackageOffer,
+            ServiceId = p.ServiceId
+        });
+
+        var pagedResult = await packageModelDto.PaginatedAsync(page, pageSize);
+
+        return pagedResult;
+
     }
 }

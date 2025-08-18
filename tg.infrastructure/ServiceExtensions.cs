@@ -12,6 +12,7 @@ using tg.application.Features.Follower.Follow;
 using tg.application.Features.Follower.GetFollower;
 using tg.application.Features.Following.GetFollower;
 using tg.application.Features.Package.Create;
+using tg.application.Features.Package.GetAll;
 using tg.application.Features.Service.Create;
 using tg.application.Features.Service.Delete;
 using tg.application.Features.Service.GetAll;
@@ -69,6 +70,7 @@ namespace tg.infrastructure
             //IPackageRepository
             services.AddScoped<IPackageRepository, PackageRepository>();
             services.AddScoped<ICommandHandler<CreatePackageRequest, CreatePackageResponse>, CreatePackageHandler>();
+            services.AddScoped<ICommandHandler<GetAllPackageRequest, Pagination<PackageModelDto>>, GetAllPackageHandler>();
             //IExternalApiClient
             services.AddScoped<IExternalApiClientRepository, ExternalApiClient>();
             services.AddScoped<ICommandHandler<GetProductRequest, GetProductResponse>, GetProductHandler>();

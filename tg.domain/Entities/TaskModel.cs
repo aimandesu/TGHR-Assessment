@@ -6,7 +6,7 @@ public class TaskModel
 {
     public Guid Id { get; set; }
     
-    public Guid ClientId { get; set; } // Foreign Key, if from request
+    public string? ClientId { get; set; } // Foreign Key, if from request
     public UserModel? Client { get; set; }
     //
     // public Guid FreelancerId { get; set; } // Foreign Key, if from our packages
