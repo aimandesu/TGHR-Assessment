@@ -13,6 +13,7 @@ builder.Services.ConfigureInfrastructure(builder.Configuration);
 builder.Services.ConfigureApplication();
 builder.Services.ConfigureJWTPolicy(builder.Configuration);
 builder.Services.ConfigureIdentityPolicy();
+builder.Services.ConfigureHttpClient(builder.Configuration);
 
 
 builder.Services.AddControllers()
